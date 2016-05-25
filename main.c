@@ -7,8 +7,11 @@
 #include <sys/wait.h>
 #include <errno.h>
 #include <fcntl.h>
+<<<<<<< HEAD
 
 #include "shell_cd.h"
+=======
+>>>>>>> 07d395fb668dcf764c76939fb51bd016ab01c266
 
 int main()
 {

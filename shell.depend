@@ -1,5 +1,13 @@
 # depslib dependency file v1.0
+<<<<<<< HEAD
 1464180599 source:/media/wzkdterh/B82416E92416AA80/code/os_project/shell/main.c
+=======
+1464169378 source:/media/wzkdterh/B82416E92416AA80/code/os_project/shell/main.c
+	"head.h"
+	"shell_cd.c"
+
+1464168321 /media/wzkdterh/B82416E92416AA80/code/os_project/shell/head.h
+>>>>>>> 07d395fb668dcf764c76939fb51bd016ab01c266
 	<stdio.h>
 	<string.h>
 	<stdlib.h>
@@ -9,15 +17,22 @@
 	<sys/wait.h>
 	<errno.h>
 	<fcntl.h>
+<<<<<<< HEAD
 	"head.h"
 	"shell_cd.c"
 
 1464180585 /media/wzkdterh/B82416E92416AA80/code/os_project/shell/head.h
+=======
+>>>>>>> 07d395fb668dcf764c76939fb51bd016ab01c266
 
 1464168567 /media/wzkdterh/B82416E92416AA80/code/os_project/shell/shell.h
 	"shell_cd.c"
 
+<<<<<<< HEAD
 1464180660 /media/wzkdterh/B82416E92416AA80/code/os_project/shell/shell_cd.c
+=======
+1464169399 /media/wzkdterh/B82416E92416AA80/code/os_project/shell/shell_cd.c
+>>>>>>> 07d395fb668dcf764c76939fb51bd016ab01c266
 	<stdio.h>
 	<string.h>
 	<stdlib.h>
@@ -28,7 +43,11 @@
 	<errno.h>
 	<fcntl.h>
 
+<<<<<<< HEAD
 1464169709 source:/media/wzkdterh/B82416E92416AA80/code/os_project/shell/shell_cd.c
+=======
+1464169399 source:/media/wzkdterh/B82416E92416AA80/code/os_project/shell/shell_cd.c
+>>>>>>> 07d395fb668dcf764c76939fb51bd016ab01c266
 	<stdio.h>
 	<string.h>
 	<stdlib.h>
