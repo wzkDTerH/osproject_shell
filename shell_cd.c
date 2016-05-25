@@ -1,3 +1,6 @@
+#ifndef __SHELL_CD_C_
+#define __SHELL_CD_C_
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -8,8 +11,9 @@
 #include <errno.h>
 #include <fcntl.h>
 
-int main()
+int shell_cd()
 {
-    printf("Hello world!\n");
     return 0;
 }
+
+#endif
