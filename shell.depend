@@ -1,0 +1,41 @@
+# depslib dependency file v1.0
+1464180599 source:/media/wzkdterh/B82416E92416AA80/code/os_project/shell/main.c
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	<unistd.h>
+	<sys/types.h>
+	<sys/stat.h>
+	<sys/wait.h>
+	<errno.h>
+	<fcntl.h>
+	"head.h"
+	"shell_cd.c"
+
+1464180585 /media/wzkdterh/B82416E92416AA80/code/os_project/shell/head.h
+
+1464168567 /media/wzkdterh/B82416E92416AA80/code/os_project/shell/shell.h
+	"shell_cd.c"
+
+1464180660 /media/wzkdterh/B82416E92416AA80/code/os_project/shell/shell_cd.c
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	<unistd.h>
+	<sys/types.h>
+	<sys/stat.h>
+	<sys/wait.h>
+	<errno.h>
+	<fcntl.h>
+
+1464169709 source:/media/wzkdterh/B82416E92416AA80/code/os_project/shell/shell_cd.c
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	<unistd.h>
+	<sys/types.h>
+	<sys/stat.h>
+	<sys/wait.h>
+	<errno.h>
+	<fcntl.h>
+
