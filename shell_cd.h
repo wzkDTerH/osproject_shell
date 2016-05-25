@@ -1,4 +1,7 @@
-int shell_cd()
+#include "head.h"
+
+int shell_cd(char *args[])
 {
-    return 0;
+
+	return 0;
 }
