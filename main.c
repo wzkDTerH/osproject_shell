@@ -17,7 +17,7 @@
 #include "shell_cd.h"
 #include "shell_exit.h"
 #include "shell_history.h"
-
+#include "shell_bin.h"
 #define SHELLCMDS_NUM 3
 ShellCmd shellcmds[]={{"exit",shell_exit},
                       {"history",shell_history},
@@ -69,11 +69,12 @@ int main()
 			if(strcmp(args[0],shellcmds[i].name)==0)
 			{
 				shellcmds[i].fun(args);
+				break;
 			}
 		}
 		if(i==SHELLCMDS_NUM)
 		{
-
+			shell_bin(args);
 		}
 	}
 	return 0;

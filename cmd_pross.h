@@ -31,6 +31,7 @@ int DivArgs(char cmd[],char (**args))
 		if(*p=='\0') continue;
 		*(p++)='\0';
 	}
+	args[args_num]=NULL;
 	#if DEBUG
 	//printf("%d\n",args_num);
 	//puts("<<<<<<DIVARGS");

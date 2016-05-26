@@ -37,6 +37,7 @@
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="shell_bin.h" />
 		<Unit filename="shell_cd.h" />
 		<Unit filename="shell_exit.h" />
 		<Unit filename="shell_history.h" />
