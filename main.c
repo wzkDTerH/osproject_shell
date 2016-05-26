@@ -56,7 +56,7 @@ int main()
 	while(1)
 	{
 		PrintCMD();
-		if((cmd_len=GetCmd(cmd))<0) Err("Read cmd Fail");
+		if(GetCmd(cmd)==NULL) Err("Read cmd Fail");
 		if(NOPCheck(cmd)) continue;
 		AddRecord(cmd);
 		if((args_num=DivArgs(cmd,args))==0) continue;

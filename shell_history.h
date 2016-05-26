@@ -37,8 +37,10 @@ int shell_history(char **arg)
 	Record *p;
 	for(p=tail; p!=NULL; p=p->next)
 	{
-		printf("%4d %s\n",p->no,p->cmd);
+		fprintf(stdout,"%4d ",p->no);
+		fputs(p->cmd,stdout);
 	}
+	fflush(stdout);
 	return 0;
 }
 

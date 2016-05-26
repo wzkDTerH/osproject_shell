@@ -3,7 +3,7 @@
 
 int GetCmd(char cmd[])
 {
-	return read(STDIN_FILENO, cmd, BUFSIZE);
+	return fgets(cmd,BUFSIZE,stdin);
 }
 int NOPCheck(char cmd[])
 {
