@@ -5,15 +5,19 @@ int GetCmd(char cmd[])
 {
 	return read(STDIN_FILENO, cmd, BUFSIZE);
 }
-
+int NOPCheck(char cmd[])
+{
+	char *p=cmd;
+	while(p==' ') ++p;
+	return *p=='\n' || *p=='\0';
+}
 int DivArgs(char cmd[],char (**args))
 {
 	#if DEBUG
 	puts(">>>>>>DIVARGS");
 	#endif // DEBUG
 	char *p=cmd;
-	int args_num=0,len;
-	char *st;
+	int args_num=0;
 	for(;*p!='\0';++args_num)
 	{
 		while(*p==' ') ++p;

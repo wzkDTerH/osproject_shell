@@ -15,9 +15,11 @@
 #include "cmd_pross.h"
 #include "shell_cd.h"
 #include "shell_exit.h"
+#include "shell_history.h"
 
-#define SHELLCMDS_NUM 2
+#define SHELLCMDS_NUM 3
 ShellCmd shellcmds[]={{"exit",shell_exit},
+                      {"history",shell_history},
                       {"cd",shell_cd}};
 
 int ShellInit(void)
@@ -55,6 +57,8 @@ int main()
 	{
 		PrintCMD();
 		if((cmd_len=GetCmd(cmd))<0) Err("Read cmd Fail");
+		if(NOPCheck(cmd)) continue;
+		AddRecord(cmd);
 		if((args_num=DivArgs(cmd,args))==0) continue;
 		#if DEBUG
 		#endif // DEBUG

@@ -31,9 +31,14 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="Err.h" />
+		<Unit filename="cmd_pross.h" />
+		<Unit filename="head.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="shell_cd.h" />
+		<Unit filename="shell_exit.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />
