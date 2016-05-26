@@ -7,6 +7,7 @@
 #include <sys/wait.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <pwd.h>
 
 #define DEBUG 1
 
@@ -22,6 +23,7 @@ ShellCmd shellcmds[]={{"exit",shell_exit},
                       {"history",shell_history},
                       {"cd",shell_cd}};
 
+
 int ShellInit(void)
 {
 #if DEBUG
@@ -29,8 +31,8 @@ int ShellInit(void)
 #endif // DEBUG
 
 	getcwd(pathname,BUFSIZE);
-
-#if DEBUG
+	if (gethostname(computer_name, NAMESIZE) != 0) Err("Cannot get computer name");
+	#if DEBUG
 	puts(pathname);
 	puts("<<<<<< ShellInit");
 #endif // DEBUG
@@ -39,7 +41,9 @@ int ShellInit(void)
 
 void PrintCMD()
 {
-	fprintf(stdout,"%s>",pathname);
+	uid=getuid();
+	usrpsw=getpwuid(uid);
+	fprintf(stdout,"%s@%s:%s$ ",usrpsw->pw_name,computer_name,pathname);
 	fflush(stdout);
 }
 int main()
