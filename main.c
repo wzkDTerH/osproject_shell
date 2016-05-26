@@ -29,11 +29,11 @@ int ShellInit(void)
 #if DEBUG
 	puts(">>>>>> ShellInit");
 #endif // DEBUG
-
-	getcwd(pathname,BUFSIZE);
+	uid=getuid();
+	usrpsw=getpwuid(uid);
+	chdir(usrpsw->pw_dir);
 	if (gethostname(computer_name, NAMESIZE) != 0) Err("Cannot get computer name");
-	#if DEBUG
-	puts(pathname);
+#if DEBUG
 	puts("<<<<<< ShellInit");
 #endif // DEBUG
 	return 0;
@@ -43,6 +43,7 @@ void PrintCMD()
 {
 	uid=getuid();
 	usrpsw=getpwuid(uid);
+	getcwd(pathname,BUFSIZE);
 	fprintf(stdout,"%s@%s:%s$ ",usrpsw->pw_name,computer_name,pathname);
 	fflush(stdout);
 }
@@ -53,10 +54,7 @@ int main()
 	char *args[MAXARGNUM];
 	int args_num;
 	int i;
-	if(ShellInit())
-	{
-		return 1;
-	}
+	if(ShellInit()) return 1;
 	while(1)
 	{
 		PrintCMD();

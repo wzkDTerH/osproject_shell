@@ -14,7 +14,7 @@ int NOPCheck(char cmd[])
 int DivArgs(char cmd[],char (**args))
 {
 	#if DEBUG
-	puts(">>>>>>DIVARGS");
+	//puts(">>>>>>DIVARGS");
 	#endif // DEBUG
 	char *p=cmd;
 	int args_num=0;
@@ -32,8 +32,8 @@ int DivArgs(char cmd[],char (**args))
 		*(p++)='\0';
 	}
 	#if DEBUG
-	printf("%d\n",args_num);
-	puts("<<<<<<DIVARGS");
+	//printf("%d\n",args_num);
+	//puts("<<<<<<DIVARGS");
 	#endif // DEBUG
 	return args_num;
 }
