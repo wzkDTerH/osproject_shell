@@ -4,15 +4,17 @@
 int shell_bin(char *arg[])
 {
 	char cmd_tmp[BUFSIZE]="/bin/";
-	int pid;
+	int pid,state;
 	strcat(cmd_tmp,arg[0]);
 	if((pid=fork())<0)	Err("Fork Error");
 	if(pid==0)
 	{
-		if(execv(cmd_tmp,arg)==-1)
+		if(execvp(cmd_tmp,arg)==-1)
 			CmdFail(arg,"Command not found!");
 		exit(0);
 	}
+     else
+		waitpid(pid,&state,0);
 	return 0;
 }
 
