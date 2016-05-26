@@ -44,7 +44,7 @@ int main()
 {
 	char cmd[BUFSIZE];
 	int cmd_len;
-	char (*args)[MAXARGNUM];
+	char *args[MAXARGNUM];
 	int args_num;
 	int i;
 	if(ShellInit())
@@ -57,7 +57,6 @@ int main()
 		if((cmd_len=GetCmd(cmd))<0) Err("Read cmd Fail");
 		if((args_num=DivArgs(cmd,args))==0) continue;
 		#if DEBUG
-		puts(cmd);
 		#endif // DEBUG
 		for(i=0; i<SHELLCMDS_NUM; ++i)
 		{
