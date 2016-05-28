@@ -9,7 +9,7 @@ int shell_bin(char *arg[])
 	if((pid=fork())<0)	Err("Fork Error");
 	if(pid==0)
 	{
-		if(execvp(cmd_tmp,arg)==-1)
+		if(execvp(arg[0],arg)==-1)
 			CmdFail(arg,"Command not found!");
 		exit(0);
 	}
