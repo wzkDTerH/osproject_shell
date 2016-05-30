@@ -8,7 +8,7 @@ int GetCmd(char cmd[])
 int NOPCheck(char cmd[])
 {
 	char *p=cmd;
-	while(p==' ') ++p;
+	while(*p==' ') ++p;
 	return *p=='\n' || *p=='\0';
 }
 
@@ -46,13 +46,13 @@ int DivCmd(char cmd[],ShellCmd cmds[])
 	}
 	return cmd_num;
 }
-int DivArgs(char cmd[],char (**args)[])
+int DivArgs(char cmd[],char (**args))
 {
 	#if DEBUG
 	//puts(">>>>>>DIVARGS");
 	#endif // DEBUG
 	char *p=cmd;
-	int args_num=0,cmd_num=0;
+	int args_num=0;
 	for(;*p!='\0';++args_num)
 	{
 		while(*p==' ') ++p;

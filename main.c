@@ -14,11 +14,11 @@
 #include "head.h"
 #include "Err.h"
 #include "cmd_pross.h"
+#include "cmd_run.h"
 #include "shell_cd.h"
 #include "shell_exit.h"
 #include "shell_history.h"
 #include "shell_bin.h"
-
 #define SHELLFUNCS_NUM 3
 ShellFunc shellfuncs[]={{"exit",shell_exit},
                       {"history",shell_history},
@@ -55,7 +55,7 @@ int main()
 	char *args[MAXARGNUM];
 	ShellCmd cmds[MAXCMDNUM];
 	int args_num,cmd_num;
-	int i,j,o;
+	int i,j;
 	if(ShellInit()) return 1;
 	int pipedf[2][2];
 	ShellCmdFun fun;
@@ -67,7 +67,7 @@ int main()
 		AddRecord(cmd);
 		if((cmd_num=DivCmd(cmd,cmds))==0) continue;
 		pipe(pipedf[0]);
-		for(i=0,o=0; i<cmd_num; ++i,o=!o)
+		for(i=0; i<cmd_num; ++i)
 		{
 			if((args_num=DivArgs(cmds[i].cmd,args))==0)
 			{
@@ -86,30 +86,10 @@ int main()
 			}
 			if(j==SHELLFUNCS_NUM)
 				fun=shell_bin;
-			pipe(pipedf[!o]);
-			if(cmds[i].flag=='|')
-			{
-				dup2(pipedf[!o][1],STDOUT_FILENO);
-			}
-			else
-			{
-				dup2(STDOUT_FILENO_ORI,STDOUT_FILENO);
-			}
-			fun(args);
-			close(pipedf[o][0]);
-			close(pipedf[o][1]);
-			if(cmds[i].flag=='|')
-			{
-				close(pipedf[!o][1]);
-				dup2(pipedf[!o][0],STDIN_FILENO);
-			}
-			else
-			{
-				dup2(STDIN_FILENO_ORI,STDIN_FILENO);
-			}
+			cmd_run(fun,pipedf[i&1],pipedf[!(i&1)],args,cmds[i].flag);
 		}
-		close(pipedf[o][0]);
-		close(pipedf[o][1]);
+		close(pipedf[i&1][0]);
+		close(pipedf[i&1][1]);
 	}
 	return 0;
 }
