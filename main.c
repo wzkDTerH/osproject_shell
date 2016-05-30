@@ -18,8 +18,9 @@
 #include "shell_exit.h"
 #include "shell_history.h"
 #include "shell_bin.h"
-#define SHELLCMDS_NUM 3
-ShellCmd shellcmds[]={{"exit",shell_exit},
+
+#define SHELLFUNCS_NUM 3
+ShellFunc shellfuncs[]={{"exit",shell_exit},
                       {"history",shell_history},
                       {"cd",shell_cd}};
 
@@ -27,14 +28,12 @@ ShellCmd shellcmds[]={{"exit",shell_exit},
 int ShellInit(void)
 {
 #if DEBUG
-	puts(">>>>>> ShellInit");
 #endif // DEBUG
 	uid=getuid();
 	usrpsw=getpwuid(uid);
 	chdir(usrpsw->pw_dir);
 	if (gethostname(computer_name, NAMESIZE) != 0) Err("Cannot get computer name");
 #if DEBUG
-	puts("<<<<<< ShellInit");
 #endif // DEBUG
 	return 0;
 }
@@ -52,29 +51,35 @@ int main()
 	char cmd[BUFSIZE];
 	int cmd_len;
 	char *args[MAXARGNUM];
-	int args_num;
-	int i;
+	ShellCmd cmds[MAXCMDNUM];
+	int args_num,cmd_num;
+	int i,j;
 	if(ShellInit()) return 1;
+	int pipedf[2][2];
+	ShellCmdFun fun;
 	while(1)
 	{
 		PrintCMD();
 		if(GetCmd(cmd)==NULL) Err("Read cmd Fail");
 		if(NOPCheck(cmd)) continue;
 		AddRecord(cmd);
-		if((args_num=DivArgs(cmd,args))==0) continue;
-		#if DEBUG
-		#endif // DEBUG
-		for(i=0; i<SHELLCMDS_NUM; ++i)
+		if((cmd_num=DivCmd(cmd,cmds))==0) continue;
+		for(i=0; i<cmd_num; ++i)
 		{
-			if(strcmp(args[0],shellcmds[i].name)==0)
+			if((args_num=DivArgs(cmds[i].cmd,args))==0) continue;
+			#if DEBUG
+			#endif // DEBUG
+			for(j=0; j<SHELLFUNCS_NUM; ++j)
 			{
-				shellcmds[i].fun(args);
-				break;
+				if(strcmp(args[0],shellfuncs[j].name)==0)
+				{
+					fun=shellfuncs[j].fun;
+					break;
+				}
 			}
-		}
-		if(i==SHELLCMDS_NUM)
-		{
-			shell_bin(args);
+			if(j==SHELLFUNCS_NUM)
+				fun=shell_bin;
+			fun(args);
 		}
 	}
 	return 0;

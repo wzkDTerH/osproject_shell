@@ -11,13 +11,47 @@ int NOPCheck(char cmd[])
 	while(p==' ') ++p;
 	return *p=='\n' || *p=='\0';
 }
-int DivArgs(char cmd[],char (**args))
+
+#define IF_DIV_CHAR(c) ((c)=='|' || (c)==';' || (c)=='&')
+
+int DivCmd(char cmd[],ShellCmd cmds[])
+{
+	int cmd_num=0,i;
+	int cmdlen=strlen(cmd);
+	cmds[0].cmd=cmd;
+	for(i=cmdlen-1; i>0; --i)
+	{
+		if(i==' ' || i=='\0' || i=='\n')
+			cmd[i]='\0';
+		else
+			break;
+	}
+	if(i<0) return 0;
+	if(!IF_DIV_CHAR(cmd[i]))
+	{
+		cmd[i]=';';
+		cmd[++i]='\0';
+	}
+	for(i=0; cmd[i]!='\0' && cmd[i]!='\n'; ++i)
+	{
+		if(IF_DIV_CHAR(cmd[i]))
+		{
+			cmds[cmd_num++].flag=cmd[i];
+			cmds[cmd_num].cmd=&cmd[i+1];
+			if(IF_DIV_CHAR(cmd[i+1]))
+				return 0;
+			cmd[i]='\0';
+		}
+	}
+	return cmd_num;
+}
+int DivArgs(char cmd[],char (**args)[])
 {
 	#if DEBUG
 	//puts(">>>>>>DIVARGS");
 	#endif // DEBUG
 	char *p=cmd;
-	int args_num=0;
+	int args_num=0,cmd_num=0;
 	for(;*p!='\0';++args_num)
 	{
 		while(*p==' ') ++p;

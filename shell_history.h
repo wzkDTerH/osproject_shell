@@ -32,7 +32,7 @@ void AddRecord(char *cmd)
 	Record_head=new_node;
 }
 
-int shell_history(char **arg)
+int shell_history(char *arg[])
 {
 	Record *p;
 	for(p=tail; p!=NULL; p=p->next)

@@ -16,4 +16,9 @@ void CmdFail(char *args[],char str[])
 	fprintf(stdout,": %s\n",str);
 	fflush(stdout);
 }
+void GrmErr(char str[])
+{
+	fprintf(stdout,"shell : %s\n",str);
+	fflush(stdout);
+}
 #endif
