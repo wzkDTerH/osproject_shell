@@ -23,6 +23,6 @@ char computer_name[NAMESIZE];
 struct passwd *usrpsw;
 int uid;
 int thread_num=0;
-int STDIN_FILENO_ORI=STDIN_FILENO;
-int STDOUT_FILENO_ORI=STDOUT_FILENO;
+int STDIN_FILENO_ORI;
+int STDOUT_FILENO_ORI;
 #endif

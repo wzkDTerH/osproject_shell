@@ -21,15 +21,16 @@ int DivCmd(char cmd[],ShellCmd cmds[])
 	cmds[0].cmd=cmd;
 	for(i=cmdlen-1; i>0; --i)
 	{
-		if(i==' ' || i=='\0' || i=='\n')
+		if(cmd[i]==' ' || cmd[i]=='\0' || cmd[i]=='\n')
 			cmd[i]='\0';
 		else
 			break;
 	}
 	if(i<0) return 0;
+	if(cmd[i]=='|') return 0;
 	if(!IF_DIV_CHAR(cmd[i]))
 	{
-		cmd[i]=';';
+		cmd[++i]=';';
 		cmd[++i]='\0';
 	}
 	for(i=0; cmd[i]!='\0' && cmd[i]!='\n'; ++i)

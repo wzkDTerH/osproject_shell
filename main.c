@@ -33,6 +33,8 @@ int ShellInit(void)
 	usrpsw=getpwuid(uid);
 	chdir(usrpsw->pw_dir);
 	if (gethostname(computer_name, NAMESIZE) != 0) Err("Cannot get computer name");
+	STDIN_FILENO_ORI=dup(STDIN_FILENO);
+	STDOUT_FILENO_ORI=dup(STDOUT_FILENO);
 #if DEBUG
 #endif // DEBUG
 	return 0;
@@ -53,7 +55,7 @@ int main()
 	char *args[MAXARGNUM];
 	ShellCmd cmds[MAXCMDNUM];
 	int args_num,cmd_num;
-	int i,j;
+	int i,j,o;
 	if(ShellInit()) return 1;
 	int pipedf[2][2];
 	ShellCmdFun fun;
@@ -64,9 +66,14 @@ int main()
 		if(NOPCheck(cmd)) continue;
 		AddRecord(cmd);
 		if((cmd_num=DivCmd(cmd,cmds))==0) continue;
-		for(i=0; i<cmd_num; ++i)
+		pipe(pipedf[0]);
+		for(i=0,o=0; i<cmd_num; ++i,o=!o)
 		{
-			if((args_num=DivArgs(cmds[i].cmd,args))==0) continue;
+			if((args_num=DivArgs(cmds[i].cmd,args))==0)
+			{
+				GrmErr("Grammer Error!");
+				break;
+			}
 			#if DEBUG
 			#endif // DEBUG
 			for(j=0; j<SHELLFUNCS_NUM; ++j)
@@ -79,8 +86,30 @@ int main()
 			}
 			if(j==SHELLFUNCS_NUM)
 				fun=shell_bin;
+			pipe(pipedf[!o]);
+			if(cmds[i].flag=='|')
+			{
+				dup2(pipedf[!o][1],STDOUT_FILENO);
+			}
+			else
+			{
+				dup2(STDOUT_FILENO_ORI,STDOUT_FILENO);
+			}
 			fun(args);
+			close(pipedf[o][0]);
+			close(pipedf[o][1]);
+			if(cmds[i].flag=='|')
+			{
+				close(pipedf[!o][1]);
+				dup2(pipedf[!o][0],STDIN_FILENO);
+			}
+			else
+			{
+				dup2(STDIN_FILENO_ORI,STDIN_FILENO);
+			}
 		}
+		close(pipedf[o][0]);
+		close(pipedf[o][1]);
 	}
 	return 0;
 }
