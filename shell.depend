@@ -1,5 +1,16 @@
 # depslib dependency file v1.0
-1464778607 source:/media/wzkdterh/B82416E92416AA80/code/os_project/shell/main.c
+1464783876 source:/media/wzkdterh/B82416E92416AA80/code/os_project/shell/main.c
+	"head.h"
+	"Err.h"
+	"cmd_pross.h"
+	"cmd_run.h"
+	"shell_cd.h"
+	"shell_exit.h"
+	"shell_history.h"
+	"shell_bin.h"
+	"shell_signal.h"
+
+1464783441 /media/wzkdterh/B82416E92416AA80/code/os_project/shell/head.h
 	<stdio.h>
 	<string.h>
 	<stdlib.h>
@@ -10,16 +21,7 @@
 	<errno.h>
 	<fcntl.h>
 	<pwd.h>
-	"head.h"
-	"Err.h"
-	"cmd_pross.h"
-	"cmd_run.h"
-	"shell_cd.h"
-	"shell_exit.h"
-	"shell_history.h"
-	"shell_bin.h"
-
-1464778586 /media/wzkdterh/B82416E92416AA80/code/os_project/shell/head.h
+	<signal.h>
 
 1464602708 /media/wzkdterh/B82416E92416AA80/code/os_project/shell/Err.h
 
@@ -30,9 +32,11 @@
 
 1464522818 /media/wzkdterh/B82416E92416AA80/code/os_project/shell/shell_exit.h
 
-1464778740 /media/wzkdterh/B82416E92416AA80/code/os_project/shell/shell_history.h
+1464785971 /media/wzkdterh/B82416E92416AA80/code/os_project/shell/shell_history.h
 
 1464778176 /media/wzkdterh/B82416E92416AA80/code/os_project/shell/shell_bin.h
 
-1464778603 /media/wzkdterh/B82416E92416AA80/code/os_project/shell/cmd_run.h
+1464785271 /media/wzkdterh/B82416E92416AA80/code/os_project/shell/cmd_run.h
+
+1464786021 /media/wzkdterh/B82416E92416AA80/code/os_project/shell/shell_signal.h
 

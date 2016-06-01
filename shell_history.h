@@ -39,6 +39,12 @@ int ResetRecord(char *cmd)
 	Record_head->cmd=malloc(strlen(cmd));
 	strcpy(Record_head->cmd,cmd);
 }
+void BackRecord()
+{
+	Record *p=Record_head;
+	Record_head=Record_head->pre;
+	free(p);
+}
 int Str2Int(char str[],int *num)
 {
 	int i=0,t=0,f=1;
@@ -63,12 +69,13 @@ int shell_r(char *arg[])
 	if(Str2Int(arg[1],&run_id)==0)
 	{
 		CmdFail(arg,"ID Error!");
+		BackRecord();
 		return 0;
 	}
-	else
 	if(run_id<1 || run_id>R_MAX || run_id>Record_head->no-1)
 	{
 		CmdFail(arg,"ID out of range!");
+		BackRecord();
 		return 0;
 	}
 	run_id=Record_head->no-run_id;
@@ -92,13 +99,16 @@ int shell_history(char *arg[])
 			return 0;
 		}
 		else
-		if(cnt<0 || cnt>Record_head->no)
+		if(cnt<0)
 		{
 			CmdFail(arg,"arg out of range!");
 			return 0;
 		}
-		cnt=Record_head->no+1-cnt;
-		for(; s->no!=cnt; s=s->next);
+		if(Record_head!=NULL)
+			cnt=Record_head->no+1-cnt;
+		else
+			cnt=-1;
+		for(;s!=NULL && s->no<cnt; s=s->next);
 	}
 	for(p=s; p!=NULL; p=p->next)
 	{
