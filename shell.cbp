@@ -33,6 +33,7 @@
 		</Compiler>
 		<Unit filename="Err.h" />
 		<Unit filename="cmd_pross.h" />
+		<Unit filename="cmd_run.h" />
 		<Unit filename="head.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />

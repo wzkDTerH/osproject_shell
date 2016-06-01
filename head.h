@@ -5,6 +5,8 @@
 #define NAMESIZE 256
 #define MAXARGNUM 32
 #define MAXCMDNUM 32
+#define R_MAX 10
+
 typedef int (*ShellCmdFun)(char**);
 typedef struct ShellFunc
 {
@@ -25,4 +27,16 @@ int uid;
 int thread_num=0;
 int STDIN_FILENO_ORI;
 int STDOUT_FILENO_ORI;
+
+int shell_exit(char**);
+int shell_history(char**);
+int shell_r(char**);
+int shell_cd(char**);
+int shell_bin(char**);
+#define SHELLFUNCS_NUM 4
+ShellFunc shellfuncs[]={{"exit",shell_exit},
+                      {"history",shell_history},
+                      {"r",shell_r},
+                      {"cd",shell_cd}};
+
 #endif

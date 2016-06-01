@@ -73,5 +73,4 @@ int DivArgs(char cmd[],char (**args))
 	#endif // DEBUG
 	return args_num;
 }
-
 #endif // __CMD_PROSS_

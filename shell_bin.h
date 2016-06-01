@@ -17,5 +17,4 @@ int shell_bin(char *arg[])
 		waitpid(pid,&state,0);
 	return 0;
 }
-
 #endif

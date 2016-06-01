@@ -19,11 +19,6 @@
 #include "shell_exit.h"
 #include "shell_history.h"
 #include "shell_bin.h"
-#define SHELLFUNCS_NUM 3
-ShellFunc shellfuncs[]={{"exit",shell_exit},
-                      {"history",shell_history},
-                      {"cd",shell_cd}};
-
 
 int ShellInit(void)
 {
@@ -51,45 +46,15 @@ void PrintCMD()
 int main()
 {
 	char cmd[BUFSIZE];
-	int cmd_len;
-	char *args[MAXARGNUM];
-	ShellCmd cmds[MAXCMDNUM];
-	int args_num,cmd_num;
 	int i,j;
 	if(ShellInit()) return 1;
-	int pipedf[2][2];
-	ShellCmdFun fun;
 	while(1)
 	{
 		PrintCMD();
 		if(GetCmd(cmd)==NULL) Err("Read cmd Fail");
 		if(NOPCheck(cmd)) continue;
 		AddRecord(cmd);
-		if((cmd_num=DivCmd(cmd,cmds))==0) continue;
-		pipe(pipedf[0]);
-		for(i=0; i<cmd_num; ++i)
-		{
-			if((args_num=DivArgs(cmds[i].cmd,args))==0)
-			{
-				GrmErr("Grammer Error!");
-				break;
-			}
-			#if DEBUG
-			#endif // DEBUG
-			for(j=0; j<SHELLFUNCS_NUM; ++j)
-			{
-				if(strcmp(args[0],shellfuncs[j].name)==0)
-				{
-					fun=shellfuncs[j].fun;
-					break;
-				}
-			}
-			if(j==SHELLFUNCS_NUM)
-				fun=shell_bin;
-			cmd_run(fun,pipedf[i&1],pipedf[!(i&1)],args,cmds[i].flag);
-		}
-		close(pipedf[i&1][0]);
-		close(pipedf[i&1][1]);
+		CmdsRun(cmd);
 	}
 	return 0;
 }
