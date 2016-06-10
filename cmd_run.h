@@ -3,7 +3,7 @@
 
 int cmd_run(ShellCmdFun fun,int pipedf_p[2],int pipedf_n[2],char **args,char flag)
 {
-	int thread_id;
+	int i;
 	pipe(pipedf_n);
 	if(flag=='|')
 	{
@@ -20,11 +20,17 @@ int cmd_run(ShellCmdFun fun,int pipedf_p[2],int pipedf_n[2],char **args,char fla
 	else
 	if(fork()==0)
 	{
-		fprintf(stdout,"\n[%d] in\n",thread_id=++thread_num);
+		int thread_id;
+		pthread_mutex_lock(&thread_num_mutex);
+		thread_id=++thread_num;
+		pthread_mutex_unlock(&thread_num_mutex);
+		fprintf(stdout,"\n[%d] in\n",thread_id);
 		fflush(stdout);
 		fun(args);
-		fprintf(stdout,"\n[%d] finished\n",thread_id);
+		fprintf(stdout,"\n[%d] finished  \n",thread_id);
+		pthread_mutex_lock(&thread_num_mutex);
 		--thread_num;
+		pthread_mutex_unlock(&thread_num_mutex);
 		//fflush(stdout);
 		exit(0);
 	}

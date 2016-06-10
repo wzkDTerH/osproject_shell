@@ -14,6 +14,7 @@ int ShellInit(void)
 {
 #if DEBUG
 #endif // DEBUG
+	pthread_mutex_init(&thread_num_mutex,NULL);
 	signal(SIGINT,CtrlHandler);
 	uid=getuid();
 	usrpsw=getpwuid(uid);

@@ -11,8 +11,9 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <pwd.h>
+#include <pthread.h>
 #include <signal.h>
-
+//#include "lock.h
 #define BUFSIZE 1024
 #define NAMESIZE 256
 #define MAXARGNUM 32
@@ -37,6 +38,7 @@ char computer_name[NAMESIZE];
 struct passwd *usrpsw;
 int uid;
 int thread_num=0;
+pthread_mutex_t thread_num_mutex;
 int STDIN_FILENO_ORI;
 int STDOUT_FILENO_ORI;
 

@@ -43,6 +43,7 @@ void BackRecord()
 {
 	Record *p=Record_head;
 	Record_head=Record_head->pre;
+	if(Record_head==NULL) Record_tail=NULL;
 	free(p);
 }
 int Str2Int(char str[],int *num)
@@ -57,33 +58,50 @@ int Str2Int(char str[],int *num)
 	*num=t*f;
 	return 1;
 }
-
+int strPREcmp(char s[],char t[])
+{
+	int i;
+	for(i=0; 1; ++i)
+	{
+		if(t[i]=='\n' || t[i]=='\0') return 1;
+		if(t[i]!=s[i]) return 0;
+	}
+	return 0;
+}
 int shell_r(char *arg[])
 {
 	Record *p;
 	char *cmd;
-	int run_id;
+	Record *run_cmd=NULL;
+	BackRecord();
+	if(Record_head==NULL)
+	{
+		return 0;
+	}
 	if(arg[1]==NULL)
-		run_id=1;
+	{
+		if(Record_head!=NULL)
+			run_cmd=Record_head;
+	}
 	else
-	if(Str2Int(arg[1],&run_id)==0)
 	{
-		CmdFail(arg,"ID Error!");
+		for(p=Record_head; p!=NULL; p=p->pre)
+		{
+			if(strPREcmp(p->cmd,arg[1]))
+				break;
+		}
+		run_cmd=p;
+	}
+	if(run_cmd==NULL)
+	{
+		CmdFail(arg,"No such cmd!\n");
 		BackRecord();
 		return 0;
 	}
-	if(run_id<1 || run_id>R_MAX || run_id>Record_head->no-1)
-	{
-		CmdFail(arg,"ID out of range!");
-		BackRecord();
-		return 0;
-	}
-	run_id=Record_head->no-run_id;
-	for(p=Record_head; p->no!=run_id; p=p->pre);
-	cmd=malloc(p->cmd);
-	strcpy(cmd,p->cmd);
-	ResetRecord(cmd);
+	cmd=malloc(run_cmd->cmd);
+	strcpy(cmd,run_cmd->cmd);
 	fprintf(stdout,"Run command: %s",cmd);
+	AddRecord(cmd);
 	CmdsRun(cmd);
 	free(cmd);
 }
