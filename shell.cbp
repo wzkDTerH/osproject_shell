@@ -42,6 +42,7 @@
 		<Unit filename="shell_cd.h" />
 		<Unit filename="shell_exit.h" />
 		<Unit filename="shell_history.h" />
+		<Unit filename="shell_signal.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />

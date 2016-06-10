@@ -1,20 +1,25 @@
 #ifndef __CMD_PROSS_
 #define __CMD_PROSS_
-
-int GetCmd(char cmd[])
+/*
+	用于对命令进行文本处理的函数
+*/
+int GetCmd(char cmd[])/*获取用户输入的命令*/
 {
 	return fgets(cmd,BUFSIZE,stdin);
 }
-int NOPCheck(char cmd[])
+int NOPCheck(char cmd[])/*检查是否是空指令*/
 {
 	char *p=cmd;
 	while(*p==' ') ++p;
 	return *p=='\n' || *p=='\0';
 }
 
+/*检查是否是分割符*/
 #define IF_DIV_CHAR(c) ((c)=='|' || (c)==';' || (c)=='&')
 
 int DivCmd(char cmd[],ShellCmd cmds[])
+/*将用户输入的命令cmd，分割成各自独立的命令，并存入cmds。
+返回分割得的命令数，（出现问题返回0）*/
 {
 	int cmd_num=0,i;
 	int cmdlen=strlen(cmd);
@@ -47,6 +52,8 @@ int DivCmd(char cmd[],ShellCmd cmds[])
 	return cmd_num;
 }
 int DivArgs(char cmd[],char (**args))
+/*将单条指令cmd的参数分割开，分别存入args。
+返回分割得的参数的数目*/
 {
 	#if DEBUG
 	//puts(">>>>>>DIVARGS");

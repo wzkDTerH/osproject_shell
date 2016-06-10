@@ -1,13 +1,16 @@
 #ifndef __ERR_H_
 #define __ERR_H_
+/*
+	出现错误时的错误信息输出语句。
+*/
 
-void Err(char errword[])
+void Err(char errword[])/* 严重错误，输出信息后结束程序 */
 {
 	fprintf(stderr, "%s: %s\n",errword,strerror(errno));
 	exit(1);
 }
 
-void CmdFail(char *args[],char str[])
+void CmdFail(char *args[],char str[])/* 指令运行错误 */
 {
 	int i;
 	fputs("shell",stdout);
@@ -16,7 +19,7 @@ void CmdFail(char *args[],char str[])
 	fprintf(stdout,": %s\n",str);
 	fflush(stdout);
 }
-void GrmErr(char str[])
+void GrmErr(char str[])/* 指令格式错误 */
 {
 	fprintf(stdout,"shell : %s\n",str);
 	fflush(stdout);
